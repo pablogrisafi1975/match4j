@@ -158,8 +158,8 @@ public class MatchObjectTest {
 	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "caseClassEq can only match classes, neither interfaces nor annotations")
 	public void matchObjectClassEqInterface() throws Exception {
 		//@formatter:off
-		Match4J.match("")
-				.caseClassEq(FlyingAnnotation.class, x -> "")
+		Match4J.match(new Animal())
+				.caseClassEq(Flying.class, x -> "")
 				.otherwise(x -> "is otherwise");
 		
 		//@formatter:on
@@ -168,8 +168,8 @@ public class MatchObjectTest {
 	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "caseClassEq can only match classes, neither interfaces nor annotations")
 	public void matchObjectClassEqAnnotations() throws Exception {
 		//@formatter:off
-		Match4J.match("")
-		.caseClassEq(Flying.class, x -> "")
+		Match4J.match(new Animal())
+		.caseClassEq(FlyingAnnotation.class, x -> "")
 		.otherwise(x -> "is otherwise");
 		
 		//@formatter:on

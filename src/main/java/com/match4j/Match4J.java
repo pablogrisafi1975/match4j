@@ -5,8 +5,17 @@ import java.util.List;
 import com.match4j.builder.MatchingForInteger;
 import com.match4j.builder.MatchingForList;
 import com.match4j.builder.MatchingForObject;
+import com.match4j.builder.MatchingForString;
 
 public class Match4J {
+
+	public static final MatchingForObject match(Object input) {
+		return new MatchingForObject(input);
+	}
+
+	public static final MatchingForString match(String input) {
+		return new MatchingForString(input);
+	}
 
 	public static final MatchingForInteger match(Integer input) {
 		return new MatchingForInteger(input);
@@ -16,7 +25,4 @@ public class Match4J {
 		return new MatchingForList<>(input);
 	}
 
-	public static final MatchingForObject match(Object input) {
-		return new MatchingForObject(input);
-	}
 }
