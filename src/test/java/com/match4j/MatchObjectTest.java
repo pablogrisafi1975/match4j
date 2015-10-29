@@ -226,7 +226,5 @@ public class MatchObjectTest {
 		assertThat(Arrays.asList("mew", "bark", "flying bird")).isEqualTo(sounds);
 		//@formatter:on
 	}
-	// BigDecimal (equal, presition),
-	// BigInteger (equal, presition), Integer, Long (Comparable), List, ENUM
 
 }
