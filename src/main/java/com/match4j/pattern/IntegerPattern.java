@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 
 import com.match4j.main.Pattern;
 
-public class IntegerPattern<O> implements Pattern<O> {
+public class IntegerPattern<O> implements Pattern<Integer, O> {
 	private final Predicate<Integer> predicate;
 	private final Function<Integer, O> function;
 
@@ -15,13 +15,13 @@ public class IntegerPattern<O> implements Pattern<O> {
 	}
 
 	@Override
-	public boolean matches(Object input) {
-		return predicate.test((Integer) input);
+	public boolean matches(Integer input) {
+		return predicate.test(input);
 	}
 
 	@Override
-	public O apply(Object input) {
-		return function.apply((Integer) input);
+	public O apply(Integer input) {
+		return function.apply(input);
 	}
 
 }

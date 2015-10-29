@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 import com.match4j.main.Pattern;
 
-public class ObjectTypeIsPattern<T, O> implements Pattern<O> {
+public class ObjectTypeIsPattern<I, T extends I, O> implements Pattern<I, O> {
 	private final Class<T> type;
 	private final Function<T, O> function;
 
@@ -14,13 +14,13 @@ public class ObjectTypeIsPattern<T, O> implements Pattern<O> {
 	}
 
 	@Override
-	public boolean matches(Object input) {
+	public boolean matches(I input) {
 		return input != null && type.isAssignableFrom(input.getClass());
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public O apply(Object input) {
+	public O apply(I input) {
 		return function.apply((T) input);
 	}
 }

@@ -5,22 +5,22 @@ import java.util.function.Predicate;
 
 import com.match4j.main.Pattern;
 
-public class ObjectPredicatePattern<O> implements Pattern<O> {
-	private final Predicate<Object> predicate;
-	private final Function<Object, O> function;
+public class ObjectPredicatePattern<I, O> implements Pattern<I, O> {
+	private final Predicate<I> predicate;
+	private final Function<I, O> function;
 
-	public ObjectPredicatePattern(Predicate<Object> predicate, Function<Object, O> function) {
+	public ObjectPredicatePattern(Predicate<I> predicate, Function<I, O> function) {
 		this.predicate = predicate;
 		this.function = function;
 	}
 
 	@Override
-	public boolean matches(Object input) {
+	public boolean matches(I input) {
 		return predicate.test(input);
 	}
 
 	@Override
-	public O apply(Object input) {
+	public O apply(I input) {
 		return function.apply(input);
 	}
 

@@ -17,12 +17,12 @@ public class MatchingForInteger {
 	}
 
 	public <O> TypedMatchingForInteger<O> caseEq(Integer value, Function<Integer, O> function) {
-		final Pattern<O> pattern = new IntegerEqPattern<>(value, function);
+		final Pattern<Integer, O> pattern = new IntegerEqPattern<>(value, function);
 		return new TypedMatchingForInteger<O>(input, pattern);
 	}
 
 	public <O> TypedMatchingForInteger<O> caseEq(int value, Function<Integer, O> function) {
-		final Pattern<O> pattern = new IntegerEqPattern<>(value, function);
+		final Pattern<Integer, O> pattern = new IntegerEqPattern<>(value, function);
 		return new TypedMatchingForInteger<O>(input, pattern);
 	}
 

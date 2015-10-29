@@ -13,45 +13,45 @@ import com.match4j.pattern.OtherwiseIntegerPattern;
 
 public class TypedMatchingForInteger<O> {
 	private final Integer input;
-	final List<Pattern<O>> patterns = new LinkedList<>();
+	final List<Pattern<Integer, O>> patterns = new LinkedList<>();
 
-	public TypedMatchingForInteger(Integer input, Pattern<O> pattern) {
+	public TypedMatchingForInteger(Integer input, Pattern<Integer, O> pattern) {
 		this.input = input;
 		patterns.add(pattern);
 	}
 
 	public TypedMatchingForInteger<O> caseEq(Integer value, Function<Integer, O> function) {
-		Pattern<O> pattern = new IntegerEqPattern<>(value, function);
+		Pattern<Integer, O> pattern = new IntegerEqPattern<>(value, function);
 		patterns.add(pattern);
 		return this;
 	}
 
 	public TypedMatchingForInteger<O> caseEq(int value, Function<Integer, O> function) {
-		Pattern<O> pattern = new IntegerEqPattern<>(value, function);
+		Pattern<Integer, O> pattern = new IntegerEqPattern<>(value, function);
 		patterns.add(pattern);
 		return this;
 	}
 
 	public TypedMatchingForInteger<O> caseGt(int value, Function<Integer, O> function) {
-		Pattern<O> pattern = new IntegerPattern<>(o -> o instanceof Integer && (Integer) o > value, function);
+		Pattern<Integer, O> pattern = new IntegerPattern<>(o -> o > value, function);
 		patterns.add(pattern);
 		return this;
 	}
 
 	public TypedMatchingForInteger<O> caseLt(int value, Function<Integer, O> function) {
-		Pattern<O> pattern = new IntegerPattern<>(o -> o instanceof Integer && (Integer) o < value, function);
+		Pattern<Integer, O> pattern = new IntegerPattern<>(o -> o < value, function);
 		patterns.add(pattern);
 		return this;
 	}
 
 	public O otherwise(Function<Integer, O> function) {
-		Pattern<O> pattern = new OtherwiseIntegerPattern<>(function);
+		Pattern<Integer, O> pattern = new OtherwiseIntegerPattern<>(function);
 		patterns.add(pattern);
 		return new PatternMatching<>(patterns).apply(input);
 	}
 
 	public TypedMatchingForInteger<O> casePred(Predicate<Integer> predicate, Function<Integer, O> function) {
-		Pattern<O> pattern = new IntegerPattern<>(predicate, function);
+		Pattern<Integer, O> pattern = new IntegerPattern<>(predicate, function);
 		patterns.add(pattern);
 		return this;
 	}

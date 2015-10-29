@@ -16,12 +16,12 @@ public class MatchingForList<E> {
 	}
 
 	public <O> TypedMatchingForList<E, O> caseEmpty(Supplier<O> supplier) {
-		final Pattern<O> pattern = new ListEmptyPattern<>(supplier);
+		final Pattern<List<E>, O> pattern = new ListEmptyPattern<>(supplier);
 		return new TypedMatchingForList<E, O>(input, pattern);
 	}
 
 	public <O> TypedMatchingForList<E, O> caseHeadTail(BiFunction<E, List<E>, O> bifunction) {
-		final Pattern<O> pattern = new ListHeadTailPattern<>(bifunction);
+		final Pattern<List<E>, O> pattern = new ListHeadTailPattern<>(bifunction);
 		return new TypedMatchingForList<E, O>(input, pattern);
 	}
 

@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 import com.match4j.main.Pattern;
 
-public class ListEmptyPattern<O> implements Pattern<O> {
+public class ListEmptyPattern<E, O> implements Pattern<List<E>, O> {
 	private final Supplier<O> supplier;
 
 	public ListEmptyPattern(Supplier<O> supplier) {
@@ -13,12 +13,12 @@ public class ListEmptyPattern<O> implements Pattern<O> {
 	}
 
 	@Override
-	public boolean matches(Object value) {
-		return value != null && ((List<?>) value).isEmpty();
+	public boolean matches(List<E> value) {
+		return value != null && value.isEmpty();
 	}
 
 	@Override
-	public O apply(Object value) {
+	public O apply(List<E> value) {
 		return supplier.get();
 	}
 }

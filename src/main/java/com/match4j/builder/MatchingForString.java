@@ -20,46 +20,37 @@ public class MatchingForString {
 	}
 
 	public <O> TypedMatchingForString<O> casePred(Predicate<String> predicate, Function<String, O> function) {
-		@SuppressWarnings("unchecked")
-		Predicate<Object> objPredicate = (Predicate<Object>) (Predicate<?>) predicate;
-		@SuppressWarnings("unchecked")
-		Function<Object, O> objFunction = (Function<Object, O>) (Function<?, O>) function;
-
-		final Pattern<O> pattern = new ObjectPredicatePattern<>(objPredicate, objFunction);
+		final Pattern<String, O> pattern = new ObjectPredicatePattern<>(predicate, function);
 		return new TypedMatchingForString<O>(input, pattern);
 	}
 
 	public <O> TypedMatchingForString<O> caseEq(String value, Function<String, O> function) {
-		@SuppressWarnings("unchecked")
-		Function<Object, O> objFunction = (Function<Object, O>) (Function<?, O>) function;
-		final Pattern<O> pattern = new ObjectEqPattern<>(value, objFunction);
+		final Pattern<String, O> pattern = new ObjectEqPattern<>(value, function);
 		return new TypedMatchingForString<O>(input, pattern);
 	}
 
 	public <O> TypedMatchingForString<O> caseNe(String value, Function<String, O> function) {
-		@SuppressWarnings("unchecked")
-		Function<Object, O> objFunction = (Function<Object, O>) (Function<?, O>) function;
-		final Pattern<O> pattern = new ObjectNePattern<>(value, objFunction);
+		final Pattern<String, O> pattern = new ObjectNePattern<>(value, function);
 		return new TypedMatchingForString<O>(input, pattern);
 	}
 
 	public <O> TypedMatchingForString<O> caseEqIgnoreCase(String value, Function<String, O> function) {
-		final Pattern<O> pattern = new StringEqIgnoreCasePattern<>(value, function);
+		final Pattern<String, O> pattern = new StringEqIgnoreCasePattern<>(value, function);
 		return new TypedMatchingForString<O>(input, pattern);
 	}
 
 	public <O> TypedMatchingForString<O> caseEqIgnoreCaseTrim(String value, Function<String, O> function) {
-		final Pattern<O> pattern = new StringEqIgnoreCaseTrimPattern<>(value, function);
+		final Pattern<String, O> pattern = new StringEqIgnoreCaseTrimPattern<>(value, function);
 		return new TypedMatchingForString<O>(input, pattern);
 	}
 
 	public <O> TypedMatchingForString<O> caseIsEmpty(Function<String, O> function) {
-		final Pattern<O> pattern = new StringIsEmptyPattern<>(function);
+		final Pattern<String, O> pattern = new StringIsEmptyPattern<>(function);
 		return new TypedMatchingForString<O>(input, pattern);
 	}
 
 	public <O> TypedMatchingForString<O> caseIsBlank(Function<String, O> function) {
-		final Pattern<O> pattern = new StringIsBlankPattern<>(function);
+		final Pattern<String, O> pattern = new StringIsBlankPattern<>(function);
 		return new TypedMatchingForString<O>(input, pattern);
 	}
 

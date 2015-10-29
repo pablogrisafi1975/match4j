@@ -4,24 +4,22 @@ import java.util.function.Function;
 
 import com.match4j.main.Pattern;
 
-public class StringEqIgnoreCaseTrimPattern<O> implements Pattern<O> {
+public class StringEqIgnoreCaseTrimPattern<O> implements Pattern<String, O> {
 	private final String value;
-	private final Function<Object, O> function;
+	private final Function<String, O> function;
 
-	@SuppressWarnings("unchecked")
 	public StringEqIgnoreCaseTrimPattern(String value, Function<String, O> function) {
 		this.value = trimToEmpty(value);
-		this.function = (Function<Object, O>) (Function<?, O>) function;
+		this.function = function;
 	}
 
 	@Override
-	public boolean matches(Object input) {
-		return value == "" && input == null || input instanceof String
-				&& trimToEmpty((String) input).equalsIgnoreCase(value);
+	public boolean matches(String input) {
+		return value == "" && input == null || trimToEmpty((String) input).equalsIgnoreCase(value);
 	}
 
 	@Override
-	public O apply(Object input) {
+	public O apply(String input) {
 		return function.apply(input);
 	}
 

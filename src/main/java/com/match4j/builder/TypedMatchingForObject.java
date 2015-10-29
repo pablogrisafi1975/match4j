@@ -15,47 +15,47 @@ import com.match4j.pattern.obj.ObjectTypeIsPattern;
 import com.match4j.pattern.obj.OtherwiseObjectPattern;
 import com.match4j.pattern.obj.OtherwiseThrowPattern;
 
-public class TypedMatchingForObject<O> {
-	private final Object input;
-	final List<Pattern<O>> patterns = new LinkedList<>();
+public class TypedMatchingForObject<I, O> {
+	private final I input;
+	final List<Pattern<I, O>> patterns = new LinkedList<>();
 
-	public TypedMatchingForObject(Object input, Pattern<O> pattern) {
+	public TypedMatchingForObject(I input, Pattern<I, O> pattern) {
 		this.input = input;
 		patterns.add(pattern);
 	}
 
-	public TypedMatchingForObject<O> casePred(Predicate<Object> predicate, Function<Object, O> function) {
-		final Pattern<O> pattern = new ObjectPredicatePattern<>(predicate, function);
+	public TypedMatchingForObject<I, O> casePred(Predicate<I> predicate, Function<I, O> function) {
+		final Pattern<I, O> pattern = new ObjectPredicatePattern<>(predicate, function);
 		patterns.add(pattern);
 		return this;
 	}
 
-	public TypedMatchingForObject<O> caseEq(Object value, Function<Object, O> function) {
-		Pattern<O> pattern = new ObjectEqPattern<>(value, function);
+	public TypedMatchingForObject<I, O> caseEq(I value, Function<I, O> function) {
+		Pattern<I, O> pattern = new ObjectEqPattern<>(value, function);
 		patterns.add(pattern);
 		return this;
 	}
 
-	public TypedMatchingForObject<O> caseNe(Object value, Function<Object, O> function) {
-		Pattern<O> pattern = new ObjectNePattern<>(value, function);
+	public TypedMatchingForObject<I, O> caseNe(I value, Function<I, O> function) {
+		Pattern<I, O> pattern = new ObjectNePattern<>(value, function);
 		patterns.add(pattern);
 		return this;
 	}
 
-	public <T> TypedMatchingForObject<O> caseClassEq(Class<T> clazz, Function<T, O> function) {
-		final Pattern<O> pattern = new ObjectClassEqPattern<>(clazz, function);
+	public <T extends I> TypedMatchingForObject<I, O> caseClassEq(Class<T> clazz, Function<T, O> function) {
+		final Pattern<I, O> pattern = new ObjectClassEqPattern<>(clazz, function);
 		patterns.add(pattern);
 		return this;
 	}
 
-	public <T> TypedMatchingForObject<O> caseTypeIs(Class<T> type, Function<T, O> function) {
-		final Pattern<O> pattern = new ObjectTypeIsPattern<>(type, function);
+	public <T extends I> TypedMatchingForObject<I, O> caseTypeIs(Class<T> type, Function<T, O> function) {
+		final Pattern<I, O> pattern = new ObjectTypeIsPattern<>(type, function);
 		patterns.add(pattern);
 		return this;
 	}
 
-	public O otherwise(Function<Object, O> function) {
-		Pattern<O> pattern = new OtherwiseObjectPattern<>(function);
+	public O otherwise(Function<I, O> function) {
+		Pattern<I, O> pattern = new OtherwiseObjectPattern<>(function);
 		patterns.add(pattern);
 		return new PatternMatching<>(patterns).apply(input);
 	}
@@ -75,7 +75,7 @@ public class TypedMatchingForObject<O> {
 	}
 
 	public O otherwiseThrow(RuntimeException runtimeException) {
-		Pattern<O> pattern = new OtherwiseThrowPattern<>(runtimeException);
+		Pattern<I, O> pattern = new OtherwiseThrowPattern<>(runtimeException);
 		patterns.add(pattern);
 		return new PatternMatching<>(patterns).apply(input);
 	}

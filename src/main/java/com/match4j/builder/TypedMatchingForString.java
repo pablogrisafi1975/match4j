@@ -19,72 +19,66 @@ import com.match4j.pattern.str.StringIsEmptyPattern;
 
 public class TypedMatchingForString<O> {
 	private final String input;
-	final List<Pattern<O>> patterns = new LinkedList<>();
+	final List<Pattern<String, O>> patterns = new LinkedList<>();
 
-	public TypedMatchingForString(String input, Pattern<O> pattern) {
+	public TypedMatchingForString(String input, Pattern<String, O> pattern) {
 		this.input = input;
 		patterns.add(pattern);
 	}
 
 	public TypedMatchingForString<O> casePred(Predicate<String> predicate, Function<String, O> function) {
-		@SuppressWarnings("unchecked")
-		Predicate<Object> objPredicate = (Predicate<Object>) (Predicate<?>) predicate;
-		@SuppressWarnings("unchecked")
-		Function<Object, O> objFunction = (Function<Object, O>) (Function<?, O>) function;
-		final Pattern<O> pattern = new ObjectPredicatePattern<>(objPredicate, objFunction);
+		final Pattern<String, O> pattern = new ObjectPredicatePattern<>(predicate, function);
 		patterns.add(pattern);
 		return this;
 	}
 
-	public TypedMatchingForString<O> caseEq(Object value, Function<Object, O> function) {
-		Pattern<O> pattern = new ObjectEqPattern<>(value, function);
+	public TypedMatchingForString<O> caseEq(String value, Function<String, O> function) {
+		Pattern<String, O> pattern = new ObjectEqPattern<>(value, function);
 		patterns.add(pattern);
 		return this;
 	}
 
 	public TypedMatchingForString<O> caseEqIgnoreCase(String value, Function<String, O> function) {
-		final Pattern<O> pattern = new StringEqIgnoreCasePattern<>(value, function);
+		final Pattern<String, O> pattern = new StringEqIgnoreCasePattern<>(value, function);
 		patterns.add(pattern);
 		return this;
 	}
 
 	public TypedMatchingForString<O> caseEqIgnoreCaseTrim(String value, Function<String, O> function) {
-		final Pattern<O> pattern = new StringEqIgnoreCaseTrimPattern<>(value, function);
+		final Pattern<String, O> pattern = new StringEqIgnoreCaseTrimPattern<>(value, function);
 		patterns.add(pattern);
 		return this;
 	}
 
 	public TypedMatchingForString<O> caseIsEmpty(Function<String, O> function) {
-		final Pattern<O> pattern = new StringIsEmptyPattern<>(function);
+		final Pattern<String, O> pattern = new StringIsEmptyPattern<>(function);
 		patterns.add(pattern);
 		return this;
 	}
 
 	public TypedMatchingForString<O> caseIsBlank(Function<String, O> function) {
-		final Pattern<O> pattern = new StringIsBlankPattern<>(function);
+		final Pattern<String, O> pattern = new StringIsBlankPattern<>(function);
 		patterns.add(pattern);
 		return this;
 	}
 
-	public TypedMatchingForString<O> caseNe(Object value, Function<Object, O> function) {
-		Pattern<O> pattern = new ObjectNePattern<>(value, function);
+	public TypedMatchingForString<O> caseNe(String value, Function<String, O> function) {
+		Pattern<String, O> pattern = new ObjectNePattern<>(value, function);
 		patterns.add(pattern);
 		return this;
 	}
 
 	public O otherwise(Function<String, O> function) {
-		@SuppressWarnings("unchecked")
-		Function<Object, O> objFunction = (Function<Object, O>) (Function<?, O>) function;
-		Pattern<O> pattern = new OtherwiseObjectPattern<>(objFunction);
+		Pattern<String, O> pattern = new OtherwiseObjectPattern<String, O>(function);
 		patterns.add(pattern);
 		return new PatternMatching<>(patterns).apply(input);
 	}
 
-	public Object otherwiseThrow() {
+	public O otherwiseThrow() {
 		return otherwiseThrow(new IllegalArgumentException("No match was found"));
 	}
 
-	public <E extends RuntimeException> Object otherwiseThrow(Class<E> runtimeExceptionClass) {
+	public <E extends RuntimeException> O otherwiseThrow(Class<E> runtimeExceptionClass) {
 		E runtimeException;
 		try {
 			runtimeException = runtimeExceptionClass.newInstance();
@@ -94,8 +88,8 @@ public class TypedMatchingForString<O> {
 		return otherwiseThrow(runtimeException);
 	}
 
-	public Object otherwiseThrow(RuntimeException runtimeException) {
-		Pattern<O> pattern = new OtherwiseThrowPattern<>(runtimeException);
+	public O otherwiseThrow(RuntimeException runtimeException) {
+		Pattern<String, O> pattern = new OtherwiseThrowPattern<>(runtimeException);
 		patterns.add(pattern);
 		return new PatternMatching<>(patterns).apply(input);
 	}

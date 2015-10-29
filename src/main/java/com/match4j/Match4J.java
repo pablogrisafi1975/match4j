@@ -9,8 +9,8 @@ import com.match4j.builder.MatchingForString;
 
 public class Match4J {
 
-	public static final MatchingForObject match(Object input) {
-		return new MatchingForObject(input);
+	public static final <I> MatchingForObject<I> match(I input) {
+		return new MatchingForObject<I>(input);
 	}
 
 	public static final MatchingForString match(String input) {

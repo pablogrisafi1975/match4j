@@ -10,15 +10,15 @@ import com.match4j.pattern.ListHeadTailPattern;
 
 public class TypedMatchingForList<E, O> {
 	private final List<E> input;
-	private final List<Pattern<O>> patterns = new LinkedList<>();
+	private final List<Pattern<List<E>, O>> patterns = new LinkedList<>();
 
-	public TypedMatchingForList(List<E> input, Pattern<O> pattern) {
+	public TypedMatchingForList(List<E> input, Pattern<List<E>, O> pattern) {
 		this.input = input;
 		patterns.add(pattern);
 	}
 
 	public TypedMatchingForList<E, O> caseHeadTail(BiFunction<E, List<E>, O> bifunction) {
-		Pattern<O> pattern = new ListHeadTailPattern<>(bifunction);
+		Pattern<List<E>, O> pattern = new ListHeadTailPattern<>(bifunction);
 		patterns.add(pattern);
 		return this;
 	}

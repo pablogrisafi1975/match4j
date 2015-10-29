@@ -5,7 +5,7 @@ import java.util.function.BiFunction;
 
 import com.match4j.main.Pattern;
 
-public class ListHeadTailPattern<E, O> implements Pattern<O> {
+public class ListHeadTailPattern<E, O> implements Pattern<List<E>, O> {
 
 	private final BiFunction<E, List<E>, O> bifunction;
 
@@ -14,16 +14,14 @@ public class ListHeadTailPattern<E, O> implements Pattern<O> {
 	}
 
 	@Override
-	public boolean matches(Object value) {
-		return value != null && !((List<?>) value).isEmpty();
+	public boolean matches(List<E> value) {
+		return value != null && !value.isEmpty();
 	}
 
 	@Override
-	public O apply(Object value) {
-		@SuppressWarnings("unchecked")
-		List<E> list = (List<E>) value;
-		E head = list.get(0);
-		List<E> tail = list.subList(0, list.size() - 1);
+	public O apply(List<E> value) {
+		E head = value.get(0);
+		List<E> tail = value.subList(0, value.size() - 1);
 		return bifunction.apply(head, tail);
 	}
 

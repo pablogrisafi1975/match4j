@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 import com.match4j.main.Pattern;
 
-public class OtherwisePattern<O> implements Pattern<O> {
+public class OtherwisePattern<I, O> implements Pattern<I, O> {
 	private final Function<Object, O> function;
 
 	public OtherwisePattern(Function<Object, O> function) {
@@ -12,12 +12,12 @@ public class OtherwisePattern<O> implements Pattern<O> {
 	}
 
 	@Override
-	public boolean matches(Object value) {
+	public boolean matches(I value) {
 		return true;
 	}
 
 	@Override
-	public O apply(Object value) {
+	public O apply(I value) {
 		return function.apply(value);
 	}
 

@@ -4,21 +4,21 @@ import java.util.function.Function;
 
 import com.match4j.main.Pattern;
 
-public class OtherwiseObjectPattern<O> implements Pattern<O> {
+public class OtherwiseObjectPattern<I, O> implements Pattern<I, O> {
 
-	private Function<Object, O> function;
+	private Function<I, O> function;
 
-	public OtherwiseObjectPattern(Function<Object, O> function) {
+	public OtherwiseObjectPattern(Function<I, O> function) {
 		this.function = function;
 	}
 
 	@Override
-	public boolean matches(Object value) {
+	public boolean matches(I value) {
 		return true;
 	}
 
 	@Override
-	public O apply(Object value) {
+	public O apply(I value) {
 		return function.apply(value);
 	}
 

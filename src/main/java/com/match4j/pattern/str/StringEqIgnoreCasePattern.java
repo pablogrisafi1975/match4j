@@ -4,23 +4,22 @@ import java.util.function.Function;
 
 import com.match4j.main.Pattern;
 
-public class StringEqIgnoreCasePattern<O> implements Pattern<O> {
+public class StringEqIgnoreCasePattern<O> implements Pattern<String, O> {
 	private final String value;
-	private final Function<Object, O> function;
+	private final Function<String, O> function;
 
-	@SuppressWarnings("unchecked")
 	public StringEqIgnoreCasePattern(String value, Function<String, O> function) {
 		this.value = value;
-		this.function = (Function<Object, O>) (Function<?, O>) function;
+		this.function = function;
 	}
 
 	@Override
-	public boolean matches(Object input) {
-		return input == null && value == null || input instanceof String && ((String) input).equalsIgnoreCase(value);
+	public boolean matches(String input) {
+		return input == null && value == null || input != null && input.equalsIgnoreCase(value);
 	}
 
 	@Override
-	public O apply(Object input) {
+	public O apply(String input) {
 		return function.apply(input);
 	}
 
