@@ -2,6 +2,10 @@ package com.match4j;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -208,7 +212,21 @@ public class MatchObjectTest {
 
 	// TODO: alternative syntax for typeIs alla cyclops
 
-	// String (ignoreCase, isBlakc, isempty), BigDecimal (equal, presition),
+	public void streamCompatibility() {
+		//@formatter:off
+		List<String> sounds = Arrays.asList(new Cat(), new Dog(), new Bird())
+		.stream()
+		.map(a -> Match4J.match(a)
+				.caseTypeIs(Cat.class, c -> c.mew())
+				.caseTypeIs(Dog.class, d -> d.bark())
+				.caseTypeIs(Bird.class, b -> b.fly())
+				.otherwiseThrow()
+				)
+		.collect(Collectors.toList());
+		assertThat(Arrays.asList("mew", "bark", "flying bird")).isEqualTo(sounds);
+		//@formatter:on
+	}
+	// BigDecimal (equal, presition),
 	// BigInteger (equal, presition), Integer, Long (Comparable), List, ENUM
 
 }

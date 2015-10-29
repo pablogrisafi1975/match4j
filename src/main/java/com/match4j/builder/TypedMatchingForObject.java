@@ -60,11 +60,11 @@ public class TypedMatchingForObject<O> {
 		return new PatternMatching<>(patterns).apply(input);
 	}
 
-	public Object otherwiseThrow() {
+	public O otherwiseThrow() {
 		return otherwiseThrow(new IllegalArgumentException("No match was found"));
 	}
 
-	public <E extends RuntimeException> Object otherwiseThrow(Class<E> runtimeExceptionClass) {
+	public <E extends RuntimeException> O otherwiseThrow(Class<E> runtimeExceptionClass) {
 		E runtimeException;
 		try {
 			runtimeException = runtimeExceptionClass.newInstance();
@@ -74,7 +74,7 @@ public class TypedMatchingForObject<O> {
 		return otherwiseThrow(runtimeException);
 	}
 
-	public Object otherwiseThrow(RuntimeException runtimeException) {
+	public O otherwiseThrow(RuntimeException runtimeException) {
 		Pattern<O> pattern = new OtherwiseThrowPattern<>(runtimeException);
 		patterns.add(pattern);
 		return new PatternMatching<>(patterns).apply(input);
