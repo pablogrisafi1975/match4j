@@ -34,6 +34,29 @@ public class MatchStringTest {
 	}
 
 	@DataProvider
+	public Object[][] matchStringClassEq_dataProvider() {
+		//@formatter:off
+		return new Object[][]{
+				{"abc", "is a String"},
+				{null, "is <null>"},
+				{"xyz",  "is a String"}
+		};
+		//@formatter:on
+	}
+
+	@Test(dataProvider = "matchStringClassEq_dataProvider")
+	public void matchStringClassEq(String input, Object expectedOutput) throws Exception {
+		//@formatter:off
+		Object actualOutput = Match4J.match(input)
+				.casePred(x -> x == null, x -> "is <null>")
+				.caseClassEq(String.class, x -> "is a String")
+				.otherwiseThrow();
+		
+		//@formatter:on
+		assertThat(expectedOutput).isEqualTo(actualOutput);
+	}
+
+	@DataProvider
 	public Object[][] matchStringEq_dataProvider() {
 		//@formatter:off
 		return new Object[][]{
