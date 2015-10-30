@@ -2,25 +2,20 @@ package com.match4j.pattern.str;
 
 import java.util.function.Function;
 
+import com.match4j.main.AbstractPattern;
 import com.match4j.main.Pattern;
 
-public class StringEqIgnoreCasePattern<O> implements Pattern<String, O> {
+public class StringEqIgnoreCasePattern<O> extends AbstractPattern<String, O> implements Pattern<String, O> {
 	private final String value;
-	private final Function<String, O> function;
 
 	public StringEqIgnoreCasePattern(String value, Function<String, O> function) {
+		super(function);
 		this.value = value;
-		this.function = function;
 	}
 
 	@Override
 	public boolean matches(String input) {
 		return input == null && value == null || input != null && input.equalsIgnoreCase(value);
-	}
-
-	@Override
-	public O apply(String input) {
-		return function.apply(input);
 	}
 
 }
